@@ -1,6 +1,7 @@
 package ssvv.example;
 
 import domain.Student;
+import domain.Tema;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
 import service.Service;
 import validation.StudentValidator;
+import validation.TemaValidator;
 import validation.ValidationException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,10 +27,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
     String filenameStudent = "src/Studenti.xml";
-
+    String filenameTema = "src/Teme.xml";
     Student student;
     StudentValidator validator = new StudentValidator();
+    TemaValidator temaValidator = new TemaValidator();
     Service service;
+
 
     @BeforeEach
     void setup(){
@@ -184,5 +188,31 @@ public class AppTest {
         assertEquals(this.student.getNume(), student.getNume());
         assertEquals(this.student.getEmail(), student.getEmail());
         assertEquals(this.student.getGrupa(), student.getGrupa());
+    }
+
+    @Test
+    void addAssignment_validAssignmentNumber_thenSuccess(){
+        service = new Service(new StudentXMLRepo(filenameStudent),
+                validator,
+                new TemaXMLRepo(filenameTema),
+                temaValidator,
+                null,
+                null
+        );
+        Tema tema = new Tema("nr1",  "descriere", 2, 1);
+        assertDoesNotThrow(() -> service.addTema(tema));
+    }
+
+    @Test
+    void addAssignment_emptyAssignmentNumber_throwsException(){
+        service = new Service(new StudentXMLRepo(filenameStudent),
+                validator,
+                new TemaXMLRepo(filenameTema),
+                temaValidator,
+                null,
+                null
+        );
+        Tema tema = new Tema("",  "descriere", 2, 1);
+        assertThrows(ValidationException.class, () -> service.addTema(tema));
     }
 }
