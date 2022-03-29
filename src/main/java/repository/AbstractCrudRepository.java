@@ -1,5 +1,7 @@
 package repository;
 
+import validation.ValidationException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,13 +44,12 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public E save(E entity) {
-        /*
+
         for(ID id: elemente.keySet()){
             if(id == entity.getID()){
-                return elemente.get(id);
+                throw new ValidationException("already existing");
             }
         }
-        */
         E el = this.findOne(entity.getID());
         if (el==null){
             this.elemente.put(entity.getID(), entity);
