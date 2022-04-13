@@ -44,7 +44,6 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public E save(E entity) {
-
         for(ID id: elemente.keySet()){
             if(id == entity.getID()){
                 throw new ValidationException("already existing");

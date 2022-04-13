@@ -32,6 +32,8 @@ public class AppTest {
     StudentValidator validator = new StudentValidator();
     TemaValidator temaValidator = new TemaValidator();
     Service service;
+    Service service2;
+    Tema tema;
 
 
     @BeforeEach
@@ -41,6 +43,17 @@ public class AppTest {
                 validator,
                 null,
                 null,
+                null,
+                null
+        );
+    }
+    @BeforeEach
+    void setupTema(){
+        tema = new Tema("nr1",  "descriere", 2, 1);
+        service2 = new Service(null,
+                validator,
+                new TemaXMLRepo(filenameTema),
+                temaValidator,
                 null,
                 null
         );
@@ -60,6 +73,24 @@ public class AppTest {
                     newInstance().newTransformer();
             transformer.transform(new DOMSource(document),
                     new StreamResult(filenameStudent));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    @AfterEach
+    void cleanup2(){
+        try {
+            Document document = DocumentBuilderFactory
+                    .newInstance()
+                    .newDocumentBuilder()
+                    .newDocument();
+            Element root  = document.createElement("inbox");
+            document.appendChild(root);
+
+            Transformer transformer = TransformerFactory.
+                    newInstance().newTransformer();
+            transformer.transform(new DOMSource(document),
+                    new StreamResult(filenameTema));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -183,6 +214,13 @@ public class AppTest {
         checkStudent(student);
     }
 
+    void checkSuccessfulAddTema(){
+        Iterator<Tema> teme = service2.getAllTeme().iterator();
+        Tema tema = teme.next();
+        assertFalse(teme.hasNext());
+        checkTema(tema);
+    }
+
     void checkStudent(Student student){
         assertEquals(this.student.getID(), student.getID());
         assertEquals(this.student.getNume(), student.getNume());
@@ -190,29 +228,29 @@ public class AppTest {
         assertEquals(this.student.getGrupa(), student.getGrupa());
     }
 
+    void checkTema(Tema tema){
+        assertEquals(this.tema.getID(), tema.getID());
+        assertEquals(this.tema.getDescriere(), tema.getDescriere());
+        assertEquals(this.tema.getDeadline(), tema.getDeadline());
+        assertEquals(this.tema.getPrimire(), tema.getPrimire());
+    }
+
     @Test
     void addAssignment_validAssignmentNumber_thenSuccess(){
-        service = new Service(new StudentXMLRepo(filenameStudent),
-                validator,
-                new TemaXMLRepo(filenameTema),
-                temaValidator,
-                null,
-                null
-        );
-        Tema tema = new Tema("nr1",  "descriere", 2, 1);
-        assertDoesNotThrow(() -> service.addTema(tema));
+        assertDoesNotThrow(()-> service2.addTema(tema));
+        checkSuccessfulAddTema();
     }
 
     @Test
     void addAssignment_emptyAssignmentNumber_throwsException(){
-        service = new Service(new StudentXMLRepo(filenameStudent),
-                validator,
-                new TemaXMLRepo(filenameTema),
-                temaValidator,
-                null,
-                null
-        );
-        Tema tema = new Tema("",  "descriere", 2, 1);
-        assertThrows(ValidationException.class, () -> service.addTema(tema));
+        tema.setID("");
+        assertThrows(ValidationException.class, () -> service2.addTema(tema));
+    }
+
+    @Test
+    void addAssignment_alreadyExisting_throwsException(){
+        Tema mockTema = new Tema("nr1", "descriere", 2, 1);
+        assertDoesNotThrow(() -> service2.addTema(tema));
+        assertThrows(ValidationException.class, () -> service2.addTema(mockTema));
     }
 }

@@ -1,0 +1,19 @@
+public Tema addTema(Tema tema){
+    temaValidator.validate(tema); -- public void validate(Tema entity) throws ValidationException
+    return temaFileRepository.save(tema); -- public E save(E entity) {
+           E entity1 = super.save(entity); -- public E save(E entity) {
+                   for(ID id: elemente.keySet()){
+                       if(id == entity.getID()){
+                           throw new ValidationException("already existing");}
+                       }
+                   E el = this.findOne(entity.getID());
+                   if (el==null){
+                       this.elemente.put(entity.getID(), entity);
+                       return null;}
+                   else return entity;}
+           if (entity1 == null) {
+                //saveToFile(entity);
+           writeToFile();}
+           return entity1;}
+    }
+s
