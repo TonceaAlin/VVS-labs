@@ -1,0 +1,42 @@
+
+Tema: ida
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: bravo
+
+Tema: idb
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: gg
+
+Tema: idb
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: gg
+
+Tema: ida
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: bravo
+
+Tema: idb
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: gg
+
+Tema: ida
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: bravo
+
+Tema: idb
+Nota: 8.5
+Predata in saptamana: 5
+Deadline: 5
+Feedback: gg
