@@ -25,10 +25,9 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest2 {
-    Student student;
-    String filenameStudent = "src/Studenti.xml";
-    String filenameTema = "src/Teme.xml";
-    String filenameNota = "src/Note.xml";
+    String filenameStudent = "src/Studenti2.xml";
+    String filenameTema = "src/Teme2.xml";
+    String filenameNota = "src/Note2.xml";
     StudentXMLRepo studentXMLRepo= new StudentXMLRepo(filenameStudent);
     TemaXMLRepo temaXMLRepo = new TemaXMLRepo(filenameTema);
     NotaXMLRepo notaXMLRepo = new NotaXMLRepo(filenameNota);
@@ -36,8 +35,6 @@ public class AppTest2 {
     TemaValidator temaValidator = new TemaValidator();
     NotaValidator notaValidator = new NotaValidator(studentXMLRepo, temaXMLRepo);
     Service service = new Service(studentXMLRepo, validator, temaXMLRepo, temaValidator, notaXMLRepo, notaValidator);
-    Tema tema;
-    Nota nota;
 
 
     @Test
