@@ -45,7 +45,7 @@ public class AppTest2 {
 
     @Test
     void addTema_newTema_added(){
-        Tema tema = new Tema("ida", "descr", 5, 2);
+        Tema tema = new Tema("ida", "descr", 7, 2);
         assertDoesNotThrow(() -> this.service.addTema(tema));
     }
 
@@ -59,12 +59,29 @@ public class AppTest2 {
     void createNewStudentAndTema_addNota_added(){
         Student student = new Student("idb", "numea", 99, "emaila");
         assertDoesNotThrow(() -> this.service.addStudent(student));
-        Tema tema = new Tema("idb", "descr", 5, 2);
+        Tema tema = new Tema("idb", "descr", 7, 2);
         assertDoesNotThrow(() -> this.service.addTema(tema));
         Nota nota = new Nota("idb", "idb", "idb", 8.5, LocalDate.now());
         assertDoesNotThrow(() -> this.service.addNota(nota, "gg"));
     }
 
-
+//    @AfterEach
+//    void cleanup(){
+//        try {
+//            Document document = DocumentBuilderFactory
+//                    .newInstance()
+//                    .newDocumentBuilder()
+//                    .newDocument();
+//            Element root  = document.createElement("inbox");
+//            document.appendChild(root);
+//
+//            Transformer transformer = TransformerFactory.
+//                    newInstance().newTransformer();
+//            transformer.transform(new DOMSource(document),
+//                    new StreamResult(filenameStudent));
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
 }
